@@ -158,9 +158,6 @@ def place_order(stock_symbol, action):
         )
 
         if action == "BUY":
-            if current_position > 0:
-                print(f"Already holding {stock_symbol}. No action taken.")
-                return
             order = MarketOrder("BUY", 10)  # Adjust quantity as needed
         elif action == "SELL":
             if current_position <= 0:
@@ -222,10 +219,12 @@ def monitor_and_trade():
         time.sleep(2)
 
 
-# Main loop
-while True:
+# Main function to run once at market open
+def run_at_market_open():
     if is_market_open():
         monitor_and_trade()
     else:
-        print("Market is closed. Waiting for market hours...")
-    time.sleep(3600)  # Run every hour
+        print("Market is closed. Exiting...")
+
+
+run_at_market_open()
